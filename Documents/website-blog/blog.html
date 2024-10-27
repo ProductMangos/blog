@@ -25,24 +25,40 @@
         </ul>
     </nav>
     <main>
-        <a>
-            <h1 class="blog-title">It's hard to write code for computers, but it's even harder to write code for humans
-            </h1>
-        </a>
-        <time>Jan 1, 2022</time>
 
-        <article style="padding: 40px 0">
-            <a href="article-details.html">
-                <p class="article-start">Writing code for a computer is hard enough. You take something big and fuzzy, some large vague business
-                    outcome you want to achive. Then you break it down recursively and think about all the cases until you
-                    have clear logical statements a computer can follow. Computers are very good at following logical
-                    statements.
-                </p>
-            </a>
-            <a href="article-details.html" class="read-more">Read more...</a>
+        <article>
+
         </article>
     </main>
-    <script src="script.js"></script>
+    <script>
+        const articleId = document.getElementsByTagName("article");
+        
+
+        const fetchBlogSummaries = async () => {
+            fetch("http://localhost:8080/blogs")
+            .then(response => response.json())
+            .then(blogs => {
+                blogs.forEach(blog => {
+                    const blogElement = document.createElement('div');
+                    console.log(blog)
+                    blogElement.innerHTML = `
+                        <a>
+                            <h1 class="blog-title">${blog.summary}</h1>
+                        </a>
+                        <time>${blog.date}</time>
+                        <p>${blog.first_paragraph}</p>
+                        <a href="article-details.html" class="read-more">Read more...</a>
+                    `;
+
+                    articleId[0].appendChild(blogElement);
+                    
+                })
+
+            })
+        }
+
+        fetchBlogSummaries();
+    </script>
 </body>
 
 </html>
