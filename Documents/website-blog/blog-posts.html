@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+    <nav>
+        <div class="logo-container">
+            <div class="logo-cut-1"></div>
+            <div class="logo-cut-2"></div>
+            <div class="logo-cut-3"></div>
+            <div class="logo-cut-4"></div>
+            <div class="logo-center"></div>
+            <div class="logo-cut-5"></div>
+        </div>
+        <ul>
+            <li><a href="/index.html">About</a></li>
+            <li><a href="#">Blog</a></li>
+        </ul>
+    </nav>
+    <main>
+
+        <article>
+
+        </article>
+    </main>
+    <script>
+        const articleId = document.getElementsByTagName("article");
+        
+
+        const fetchBlogSummaries = async () => {
+            fetch("http://localhost:8080/blogposts")
+            .then(response => response.json())
+            .then(blogs => {
+                blogs.forEach(blog => {
+                    const blogElement = document.createElement('div');
+                    console.log(blog)
+                    blogElement.innerHTML = `
+                        <a>
+                            <h1 class="blog-title">${blog.summary}</h1>
+                        </a>
+                        <time>${blog.date}</time>
+                        <p>${blog.first_paragraph}</p>
+                        <a href="blog.html?date=${blog.date}" class="read-more">Read more...</a>
+                    `;
+
+                    articleId[0].appendChild(blogElement);
+                    
+                })
+
+            })
+        }
+
+        fetchBlogSummaries();
+    </script>
+</body>
+
+</html>

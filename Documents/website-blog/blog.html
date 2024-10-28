@@ -25,39 +25,20 @@
         </ul>
     </nav>
     <main>
-
-        <article>
-
-        </article>
+       
     </main>
     <script>
-        const articleId = document.getElementsByTagName("article");
-        
-
-        const fetchBlogSummaries = async () => {
-            fetch("http://localhost:8080/blogs")
-            .then(response => response.json())
-            .then(blogs => {
-                blogs.forEach(blog => {
-                    const blogElement = document.createElement('div');
-                    console.log(blog)
-                    blogElement.innerHTML = `
-                        <a>
-                            <h1 class="blog-title">${blog.summary}</h1>
-                        </a>
-                        <time>${blog.date}</time>
-                        <p>${blog.first_paragraph}</p>
-                        <a href="article-details.html" class="read-more">Read more...</a>
-                    `;
-
-                    articleId[0].appendChild(blogElement);
-                    
-                })
-
-            })
+        const getBlogDate = () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const date = urlParams.get('date');
+            return date;
         }
 
-        fetchBlogSummaries();
+        fetch(`http://localhost:8080/blogpost?date=${getBlogDate()}`)
+        .then(response => response.json())
+        .then(blogs => {
+            console.log(blogs)
+        })
     </script>
 </body>
 
